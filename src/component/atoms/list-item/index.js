@@ -14,12 +14,15 @@ const ListItem = (props) => {
     onClick,
   } = props;
   const [hover, setHover] = useState(false);
-
   return (
     <div
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      onClick={() => onClick(data)}
+      onClick={() => {
+        if (action !== "hover") {
+          onClick(data);
+        }
+      }}
       className="border rounded-md p-2 flex items-center justify-start gap-2 relative cursor-pointer hover:bg-primary/[0.5]"
     >
       <p className="text-lg truncate" title={text ? text : ""}>

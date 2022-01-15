@@ -1,4 +1,4 @@
-import { Button, Card } from "./component/atoms";
+import { Button, Card, Dialog } from "./component/atoms";
 import Layout from "./component/layouts";
 import { List, ModalDetail } from "./component/molecules";
 import { useSelector, useDispatch } from "react-redux";
@@ -45,6 +45,11 @@ const dummy = [
 
 function App() {
   const [openDetail, setOpenDetail] = useState(false);
+  const [comfirmDelete, setComfirmDelete] = useState({
+    open: false,
+    onOk: () => {},
+    onCancel: () => {},
+  });
   const [detailData, setDetailData] = useState({});
   const data = useSelector((state) => state.data.values);
   const isEmpty = useSelector((state) => state.data.empty);
@@ -57,6 +62,27 @@ function App() {
     }
   }, [dispatch, isEmpty]);
 
+  const handleDelete = (id) => {
+    setComfirmDelete({
+      open: true,
+      onOk: () => {
+        dispatch(removeData(id));
+        setComfirmDelete({
+          open: false,
+          onOk: () => {},
+          onCancel: () => {},
+        });
+      },
+      onCancel: () => {
+        setComfirmDelete({
+          open: false,
+          onOk: () => {},
+          onCancel: () => {},
+        });
+      },
+    });
+  };
+
   return (
     <Layout>
       <div className="w-full h-fit flex flex-col gap-4 items-center justify-center">
@@ -66,7 +92,9 @@ function App() {
               <List
                 data={data}
                 action="hover"
-                onRemove={(id) => dispatch(removeData(id))}
+                onRemove={(id) => {
+                  handleDelete(id);
+                }}
                 close
                 edit
                 onClick={(data) => {
@@ -110,6 +138,11 @@ function App() {
           </div>
         </Card>
       </div>
+      <Dialog
+        open={comfirmDelete.open}
+        close={comfirmDelete.onCancel}
+        onOk={comfirmDelete.onOk}
+      />
       <ModalDetail
         data={detailData}
         title="Detail"
