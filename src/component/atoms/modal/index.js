@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "..";
 
 export default function Modal(props) {
-  const { open, close, title, action = false, children } = props;
+  const { open, close, title, action = false, children, onSave } = props;
   return (
     <>
       {open ? (
@@ -33,20 +33,24 @@ export default function Modal(props) {
                 <div className="relative p-6 flex-auto">{children}</div>
                 {/*footer*/}
                 {action && (
-                  <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                  <div className="flex items-center justify-end p-6 border-t gap-4 border-solid border-blueGray-200 rounded-b">
                     <Button color="danger" onClick={() => close(false)}>
                       Close
                     </Button>
-                    <Button onClick={() => close(false)}>Save Changes</Button>
+                    <Button
+                      onClick={() => {
+                        onSave();
+                        close(false);
+                      }}
+                    >
+                      Save
+                    </Button>
                   </div>
                 )}
               </div>
             </div>
           </div>
-          <div
-            onClick={() => close(false)}
-            className="opacity-25 fixed inset-0 z-40 bg-black"
-          ></div>
+          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
         </>
       ) : null}
     </>

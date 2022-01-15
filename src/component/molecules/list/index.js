@@ -9,6 +9,7 @@ const List = (props) => {
     onClick,
     close = false,
     edit = false,
+    onEdit,
   } = props;
   return (
     <div className="w-full h-full flex gap-2 flex-col">
@@ -25,6 +26,9 @@ const List = (props) => {
             }}
             close={close}
             edit={edit}
+            onEdit={(data) => {
+              onEdit(data);
+            }}
           />
         );
       })}

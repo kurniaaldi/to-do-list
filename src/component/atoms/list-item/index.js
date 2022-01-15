@@ -33,7 +33,11 @@ const ListItem = (props) => {
             <div className="absolute rounded-md w-full h-full -m-2 flex items-center justify-center gap-4 ">
               {edit && (
                 <div
-                  onClick={onEdit}
+                  onClick={() => {
+                    if (action === "hover") {
+                      onEdit(data);
+                    }
+                  }}
                   className="cursor-pointer rounded-md bg-white p-2"
                 >
                   {closeIcon ? closeIcon : <Edit width="20" height="20" />}

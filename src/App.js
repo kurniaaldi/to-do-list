@@ -1,6 +1,6 @@
 import { Button, Card, Dialog } from "./component/atoms";
 import Layout from "./component/layouts";
-import { List, ModalDetail } from "./component/molecules";
+import { List, ModalDetail, ModalEdit } from "./component/molecules";
 import { useSelector, useDispatch } from "react-redux";
 import { createData, initialValues, removeData } from "redux/reducer/reducer";
 import { useEffect, useState } from "react";
@@ -45,10 +45,18 @@ const dummy = [
 
 function App() {
   const [openDetail, setOpenDetail] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
   const [comfirmDelete, setComfirmDelete] = useState({
     open: false,
     onOk: () => {},
     onCancel: () => {},
+  });
+  const [editValues, setEditValues] = useState({
+    createdAt: "2019-11-15 04:00",
+    description: "lorem ipsum",
+    id: 5,
+    status: 1,
+    title: "Make a phone call to mom",
   });
   const [detailData, setDetailData] = useState({});
   const data = useSelector((state) => state.data.values);
@@ -61,7 +69,7 @@ function App() {
       dispatch(initialValues(dummy));
     }
   }, [dispatch, isEmpty]);
-
+  console.log(editValues);
   const handleDelete = (id) => {
     setComfirmDelete({
       open: true,
@@ -100,6 +108,10 @@ function App() {
                 onClick={(data) => {
                   setOpenDetail(true);
                   setDetailData(data);
+                }}
+                onEdit={(data) => {
+                  setOpenEdit(true);
+                  setEditValues(data);
                 }}
               />
             )}
@@ -142,6 +154,13 @@ function App() {
         open={comfirmDelete.open}
         close={comfirmDelete.onCancel}
         onOk={comfirmDelete.onOk}
+      />
+      <ModalEdit
+        data={editValues}
+        title="Edit"
+        open={openEdit}
+        close={setOpenEdit}
+        onSave={setEditValues}
       />
       <ModalDetail
         data={detailData}

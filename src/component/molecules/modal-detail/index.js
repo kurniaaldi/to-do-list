@@ -3,7 +3,6 @@ import React from "react";
 
 const ModalDetail = (props) => {
   const { title, open, close, data } = props;
-  console.log(data);
   return (
     <div>
       <Modal title={title} open={open} close={close}>
