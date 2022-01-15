@@ -23,11 +23,10 @@ const ModalEdit = (props) => {
 
     setValues({ ...values, [name]: value });
   };
-
   const handleSave = () => {
     onSave(values);
   };
-
+  console.log(values);
   return (
     <div>
       <Modal action title={title} open={open} close={close} onSave={handleSave}>
@@ -39,6 +38,20 @@ const ModalEdit = (props) => {
           >
             {data.status ? "Done" : "On Going"}
           </h5>
+          <div className="grid grid-cols-3 gap-2 w-full items-center">
+            <p className="col-span-1">Status</p>
+            <div className="col-span-2">
+              <Input
+                type="checkbox"
+                name="status"
+                onChange={(e) => {
+                  const { checked } = e.target;
+                  setValues({ ...values, status: checked ? 1 : 0 });
+                }}
+                value={values.status}
+              />
+            </div>
+          </div>
           <div className="grid grid-cols-3 gap-2 w-full items-center">
             <p className="col-span-1">Title</p>
             <div className="col-span-2">
