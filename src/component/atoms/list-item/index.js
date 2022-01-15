@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Close, Edit } from "../../../assets/icons";
+import { Close, Edit, Eye } from "../../../assets/icons";
 
 const ListItem = (props) => {
   const {
@@ -55,6 +55,14 @@ const ListItem = (props) => {
                   )}
                 </div>
               )}
+              <div
+                onClick={() => {
+                  onClick(data);
+                }}
+                className="cursor-pointer rounded-md bg-white p-2"
+              >
+                <Eye width="20" height="20" />
+              </div>
             </div>
           )
         : close && (
