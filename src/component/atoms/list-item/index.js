@@ -8,6 +8,7 @@ const ListItem = (props) => {
     closeIcon,
     onClose = () => {},
     action = "",
+    onEdit = () => {},
   } = props;
   const [hover, setHover] = useState(false);
 
@@ -15,7 +16,7 @@ const ListItem = (props) => {
     <div
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className="border rounded-md p-2 my-2 flex items-center justify-start gap-2 relative"
+      className="border rounded-md p-2 flex items-center justify-start gap-2 relative"
     >
       <p className="text-lg truncate" title={text ? text : ""}>
         {text ? text : ""}
@@ -27,13 +28,13 @@ const ListItem = (props) => {
               className="absolute rounded-md w-full h-full -m-2 flex items-center justify-center gap-4 bg-black/[0.5]"
             >
               <div
-                onClick={onClose}
+                onClick={onEdit}
                 className="cursor-pointer rounded-md bg-white p-2"
               >
                 {closeIcon ? closeIcon : <Edit width="20" height="20" />}
               </div>
               <div
-                onClick={onClose}
+                onClick={close}
                 className="cursor-pointer rounded-md bg-white p-2"
               >
                 {closeIcon ? (
