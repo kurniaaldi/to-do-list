@@ -1,6 +1,8 @@
 import { Button, Card } from "./component/atoms";
 import Layout from "./component/layouts";
 import { List } from "./component/molecules";
+import { useSelector, useDispatch } from "react-redux";
+import { createData, initialValues } from "redux/reducer/reducer";
 
 function App() {
   const dummy = [
@@ -40,22 +42,26 @@ function App() {
       createdAt: "2019-11-15 04:00",
     },
   ];
+  const data = useSelector((state) => state.data.values);
+  const isEmpty = useSelector((state) => state.data.empty);
+
+  const dispatch = useDispatch();
 
   return (
     <Layout>
       <div className="w-full h-fit flex flex-col gap-4 items-center justify-center">
         <Card rounded shadow padding={false}>
           <div className="h-96 w-80 p-2 overflow-auto">
-            <List data={dummy} action="hover" />
+            {!isEmpty && <List data={data} action="hover" />}
           </div>
         </Card>
-        <Button>Create</Button>
+        <Button onClick={() => dispatch(initialValues(dummy))}>Create</Button>
       </div>
 
       <div className="w-full h-fit flex flex-col gap-4 items-center justify-center">
         <Card rounded shadow padding={false}>
           <div className="h-96 w-80 p-2 overflow-auto">
-            <List data={dummy} action={false} />
+            {!isEmpty && <List data={data} action="hover" />}
           </div>
         </Card>
       </div>
