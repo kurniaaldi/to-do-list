@@ -3,6 +3,7 @@ import { Close, Edit } from "../../../assets/icons";
 
 const ListItem = (props) => {
   const {
+    data,
     text,
     close = false,
     closeIcon,
@@ -10,7 +11,7 @@ const ListItem = (props) => {
     action = "",
     onEdit = () => {},
     edit = false,
-    onClick = () => {},
+    onClick,
   } = props;
   const [hover, setHover] = useState(false);
 
@@ -18,7 +19,7 @@ const ListItem = (props) => {
     <div
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      onClick={onClick}
+      onClick={() => onClick(data)}
       className="border rounded-md p-2 flex items-center justify-start gap-2 relative cursor-pointer hover:bg-primary/[0.5]"
     >
       <p className="text-lg truncate" title={text ? text : ""}>

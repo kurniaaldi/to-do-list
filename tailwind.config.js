@@ -25,6 +25,9 @@ module.exports = {
       border: {
         DEFAULT: "#D7E1EA",
       },
+      warning: {
+        DEFAULT: "#FFA800",
+      },
       danger: {
         DEFAULT: "#dd524c",
       },

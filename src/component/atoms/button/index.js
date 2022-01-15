@@ -1,7 +1,7 @@
 import React from "react";
 
 const DefaultClass =
-  "font-semibold justify-center w-28 rounded-full flex items-center gap-2 h-14";
+  "font-semibold justify-center w-fit px-4 rounded-full flex items-center gap-2";
 
 const Button = ({
   children,

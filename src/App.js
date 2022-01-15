@@ -1,6 +1,6 @@
-import { Button, Card, Modal } from "./component/atoms";
+import { Button, Card } from "./component/atoms";
 import Layout from "./component/layouts";
-import { List } from "./component/molecules";
+import { List, ModalDetail } from "./component/molecules";
 import { useSelector, useDispatch } from "react-redux";
 import { createData, initialValues, removeData } from "redux/reducer/reducer";
 import { useEffect, useState } from "react";
@@ -45,6 +45,7 @@ const dummy = [
 
 function App() {
   const [openDetail, setOpenDetail] = useState(false);
+  const [detailData, setDetailData] = useState({});
   const data = useSelector((state) => state.data.values);
   const isEmpty = useSelector((state) => state.data.empty);
 
@@ -68,7 +69,10 @@ function App() {
                 onRemove={(id) => dispatch(removeData(id))}
                 close
                 edit
-                onClick={() => setOpenDetail(true)}
+                onClick={(data) => {
+                  setOpenDetail(true);
+                  setDetailData(data);
+                }}
               />
             )}
           </div>
@@ -94,17 +98,23 @@ function App() {
         <Card rounded shadow>
           <div className="h-96 w-80 p-2 overflow-auto">
             {!isEmpty && (
-              <List data={data} action="" onClick={() => setOpenDetail(true)} />
+              <List
+                data={data}
+                action=""
+                onClick={(data) => {
+                  setOpenDetail(true);
+                  setDetailData(data);
+                }}
+              />
             )}
           </div>
         </Card>
       </div>
-      <Modal
+      <ModalDetail
+        data={detailData}
+        title="Detail"
         open={openDetail}
         close={setOpenDetail}
-        children={
-          <List data={data} action="" onClick={() => setOpenDetail(true)} />
-        }
       />
     </Layout>
   );
