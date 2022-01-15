@@ -16,7 +16,7 @@ const ListItem = (props) => {
     <div
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className="border rounded-md p-2 my-2 flex items-center justify-start gap-2 relative"
+      className="border rounded-md p-2 flex items-center justify-start gap-2 relative"
     >
       <p className="text-lg truncate" title={text ? text : ""}>
         {text ? text : ""}

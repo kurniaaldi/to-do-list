@@ -5,7 +5,7 @@ const List = (props) => {
   const { data = [], action, onRemove } = props;
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full flex gap-2 flex-col">
       {Array.from(data || []).map((item, index) => {
         return (
           <ListItem

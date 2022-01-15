@@ -58,7 +58,7 @@ function App() {
   return (
     <Layout>
       <div className="w-full h-fit flex flex-col gap-4 items-center justify-center">
-        <Card rounded shadow padding={false}>
+        <Card rounded shadow>
           <div className="h-96 w-80 p-2 overflow-auto">
             {!isEmpty && (
               <List
@@ -87,7 +87,7 @@ function App() {
       </div>
 
       <div className="w-full h-fit flex flex-col gap-4 items-center justify-center">
-        <Card rounded shadow padding={false}>
+        <Card rounded shadow>
           <div className="h-96 w-80 p-2 overflow-auto">
             {!isEmpty && <List data={data} action="" />}
           </div>
