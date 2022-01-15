@@ -15,43 +15,6 @@ import {
 } from "redux/reducer/reducer";
 import { useEffect, useState } from "react";
 import { getData } from "utils/service";
-const dummy = [
-  {
-    id: 1,
-    title: "Make a meal",
-    description: "lorem ipsum",
-    status: 0,
-    createdAt: "2019-11-15 18:00",
-  },
-  {
-    id: 2,
-    title: "Dinner with family",
-    description: "lorem ipsum",
-    status: 0,
-    createdAt: "2019-11-16 18:00",
-  },
-  {
-    id: 3,
-    title: "Watch scary movie",
-    description: "lorem ipsum",
-    status: 0,
-    createdAt: "2019-11-15 13:00",
-  },
-  {
-    id: 4,
-    title: "Learn something new",
-    description: "lorem ipsum",
-    status: 1,
-    createdAt: "2019-11-15 08:00",
-  },
-  {
-    id: 5,
-    title: "Make a phone call to mom",
-    description: "lorem ipsum",
-    status: 1,
-    createdAt: "2019-11-15 04:00",
-  },
-];
 
 function App() {
   const [openDetail, setOpenDetail] = useState(false);
@@ -87,7 +50,7 @@ function App() {
           .then((res) => {
             setIsLoading(false);
 
-            dispatch(initialValues(dummy));
+            dispatch(initialValues(res));
           })
           .catch((err) => {
             setIsLoading(false);
@@ -177,6 +140,7 @@ function App() {
   const handleCreate = (values) => {
     dispatch(createData(values));
   };
+
   return (
     <Layout>
       <div className="w-full h-fit flex flex-col gap-4 items-center justify-center">
@@ -241,7 +205,7 @@ function App() {
 
       <ModalCreate
         data={editValues}
-        title="Edit"
+        title="Create"
         open={openCreate}
         close={setOpenCreate}
         onSave={handleCreate}
