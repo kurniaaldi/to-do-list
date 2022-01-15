@@ -26,7 +26,6 @@ const ModalEdit = (props) => {
   const handleSave = () => {
     onSave(values);
   };
-  console.log(values);
   return (
     <div>
       <Modal action title={title} open={open} close={close} onSave={handleSave}>
