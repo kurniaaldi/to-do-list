@@ -103,8 +103,38 @@ function App() {
 
   useEffect(() => {
     if (data) {
-      setIsDone(data.filter((item) => item.status === 1));
-      setIsDo(data.filter((item) => item.status === 0));
+      setIsDone(
+        data
+          .filter((item) => item.status === 1)
+          .sort(function (a, b) {
+            var key1 = new Date(a.createdAt);
+            var key2 = new Date(b.createdAt);
+
+            if (key1 < key2) {
+              return -1;
+            } else if (key1 === key2) {
+              return 0;
+            } else {
+              return 1;
+            }
+          })
+      );
+      setIsDo(
+        data
+          .filter((item) => item.status === 0)
+          .sort(function (a, b) {
+            var key1 = new Date(a.createdAt);
+            var key2 = new Date(b.createdAt);
+
+            if (key1 < key2) {
+              return 1;
+            } else if (key1 === key2) {
+              return 0;
+            } else {
+              return -1;
+            }
+          })
+      );
     }
   }, [data]);
 
