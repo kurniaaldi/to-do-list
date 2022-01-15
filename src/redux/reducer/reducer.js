@@ -26,8 +26,11 @@ export const counterSlice = createSlice({
     createData: (state, action) => {
       return { ...state, values: [...state.values, { ...action.payload }] };
     },
-    removeData: (state) => {
-      state.value -= 1;
+    removeData: (state, action) => {
+      return {
+        ...state,
+        values: [...state.values.filter((item) => item.id !== action.payload)],
+      };
     },
     updateData: (state, action) => {
       state.value += action.payload;

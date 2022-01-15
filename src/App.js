@@ -2,7 +2,7 @@ import { Button, Card } from "./component/atoms";
 import Layout from "./component/layouts";
 import { List } from "./component/molecules";
 import { useSelector, useDispatch } from "react-redux";
-import { createData, initialValues } from "redux/reducer/reducer";
+import { createData, initialValues, removeData } from "redux/reducer/reducer";
 import { useEffect } from "react";
 
 const dummy = [
@@ -60,7 +60,13 @@ function App() {
       <div className="w-full h-fit flex flex-col gap-4 items-center justify-center">
         <Card rounded shadow padding={false}>
           <div className="h-96 w-80 p-2 overflow-auto">
-            {!isEmpty && <List data={data} action="hover" />}
+            {!isEmpty && (
+              <List
+                data={data}
+                action="hover"
+                onRemove={(id) => dispatch(removeData(id))}
+              />
+            )}
           </div>
         </Card>
         <Button
