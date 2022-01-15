@@ -33,7 +33,7 @@ export const counterSlice = createSlice({
       };
     },
     updateData: (state, action) => {
-      state.value += action.payload;
+      return { ...state, values: [...action.payload] };
     },
   },
 });

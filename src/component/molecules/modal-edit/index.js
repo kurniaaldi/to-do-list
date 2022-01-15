@@ -11,6 +11,7 @@ const ModalEdit = (props) => {
   useEffect(() => {
     if (open) {
       setValues({
+        ...data,
         title: data.title,
         description: data.description,
       });
@@ -24,11 +25,7 @@ const ModalEdit = (props) => {
   };
 
   const handleSave = () => {
-    onSave((prev) => ({
-      ...prev,
-      title: values.title,
-      description: values.description,
-    }));
+    onSave(values);
   };
 
   return (

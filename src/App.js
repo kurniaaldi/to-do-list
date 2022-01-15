@@ -2,7 +2,12 @@ import { Button, Card, Dialog } from "./component/atoms";
 import Layout from "./component/layouts";
 import { List, ModalDetail, ModalEdit } from "./component/molecules";
 import { useSelector, useDispatch } from "react-redux";
-import { createData, initialValues, removeData } from "redux/reducer/reducer";
+import {
+  createData,
+  initialValues,
+  removeData,
+  updateData,
+} from "redux/reducer/reducer";
 import { useEffect, useState } from "react";
 
 const dummy = [
@@ -58,7 +63,11 @@ function App() {
     status: 1,
     title: "Make a phone call to mom",
   });
+  const [isDone, setIsDone] = useState([]);
+  const [isDo, setIsDo] = useState([]);
+
   const [detailData, setDetailData] = useState({});
+
   const data = useSelector((state) => state.data.values);
   const isEmpty = useSelector((state) => state.data.empty);
 
@@ -69,7 +78,14 @@ function App() {
       dispatch(initialValues(dummy));
     }
   }, [dispatch, isEmpty]);
-  console.log(editValues);
+
+  useEffect(() => {
+    if (data) {
+      setIsDone(data.filter((item) => item.status === 1));
+      setIsDo(data.filter((item) => item.status === 0));
+    }
+  }, [data]);
+
   const handleDelete = (id) => {
     setComfirmDelete({
       open: true,
@@ -91,14 +107,30 @@ function App() {
     });
   };
 
+  const editData = (values) => {
+    const copyData = [...data];
+    const filterData = copyData.map((item) => {
+      if (item.id === values.id) {
+        return { ...values };
+      } else {
+        return {
+          ...item,
+        };
+      }
+    });
+
+    dispatch(updateData(filterData));
+  };
+
   return (
     <Layout>
       <div className="w-full h-fit flex flex-col gap-4 items-center justify-center">
         <Card rounded shadow>
           <div className="h-96 w-80 p-2 overflow-auto">
+            <h5 className="text-warning pb-4 text-xl">On Going</h5>
             {!isEmpty && (
               <List
-                data={data}
+                data={isDo}
                 action="hover"
                 onRemove={(id) => {
                   handleDelete(id);
@@ -137,9 +169,10 @@ function App() {
       <div className="w-full h-fit flex flex-col gap-4 items-center justify-center">
         <Card rounded shadow>
           <div className="h-96 w-80 p-2 overflow-auto">
+            <h5 className="text-success pb-4 text-xl">Done</h5>
             {!isEmpty && (
               <List
-                data={data}
+                data={isDone}
                 action=""
                 onClick={(data) => {
                   setOpenDetail(true);
@@ -160,7 +193,7 @@ function App() {
         title="Edit"
         open={openEdit}
         close={setOpenEdit}
-        onSave={setEditValues}
+        onSave={editData}
       />
       <ModalDetail
         data={detailData}
