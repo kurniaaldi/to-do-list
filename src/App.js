@@ -1,4 +1,4 @@
-import { Button, Card, Dialog } from "./component/atoms";
+import { Button, Card, Dialog, LoadingOverlay } from "./component/atoms";
 import Layout from "./component/layouts";
 import { List, ModalDetail, ModalEdit } from "./component/molecules";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,7 +9,7 @@ import {
   updateData,
 } from "redux/reducer/reducer";
 import { useEffect, useState } from "react";
-
+import { getData } from "utils/service";
 const dummy = [
   {
     id: 1,
@@ -65,7 +65,7 @@ function App() {
   });
   const [isDone, setIsDone] = useState([]);
   const [isDo, setIsDo] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [detailData, setDetailData] = useState({});
 
   const data = useSelector((state) => state.data.values);
@@ -74,10 +74,26 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isEmpty) {
-      dispatch(initialValues(dummy));
-    }
-  }, [dispatch, isEmpty]);
+    const fetchData = async () => {
+      setIsLoading(true);
+      setTimeout(async () => {
+        await getData()
+          .then((res) => {
+            setIsLoading(false);
+
+            dispatch(initialValues(dummy));
+          })
+          .catch((err) => {
+            setIsLoading(false);
+
+            console.log(err);
+          });
+      }, 2000);
+    };
+
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (data) {
@@ -183,6 +199,7 @@ function App() {
           </div>
         </Card>
       </div>
+      {isLoading && <LoadingOverlay />}
       <Dialog
         open={comfirmDelete.open}
         close={comfirmDelete.onCancel}
