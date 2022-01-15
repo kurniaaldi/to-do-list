@@ -1,9 +1,9 @@
-import { Button, Card } from "./component/atoms";
+import { Button, Card, Modal } from "./component/atoms";
 import Layout from "./component/layouts";
 import { List } from "./component/molecules";
 import { useSelector, useDispatch } from "react-redux";
 import { createData, initialValues, removeData } from "redux/reducer/reducer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const dummy = [
   {
@@ -44,6 +44,7 @@ const dummy = [
 ];
 
 function App() {
+  const [openDetail, setOpenDetail] = useState(false);
   const data = useSelector((state) => state.data.values);
   const isEmpty = useSelector((state) => state.data.empty);
 
@@ -67,6 +68,7 @@ function App() {
                 onRemove={(id) => dispatch(removeData(id))}
                 close
                 edit
+                onClick={() => setOpenDetail(true)}
               />
             )}
           </div>
@@ -91,10 +93,19 @@ function App() {
       <div className="w-full h-fit flex flex-col gap-4 items-center justify-center">
         <Card rounded shadow>
           <div className="h-96 w-80 p-2 overflow-auto">
-            {!isEmpty && <List data={data} action="" onClick />}
+            {!isEmpty && (
+              <List data={data} action="" onClick={() => setOpenDetail(true)} />
+            )}
           </div>
         </Card>
       </div>
+      <Modal
+        open={openDetail}
+        close={setOpenDetail}
+        children={
+          <List data={data} action="" onClick={() => setOpenDetail(true)} />
+        }
+      />
     </Layout>
   );
 }

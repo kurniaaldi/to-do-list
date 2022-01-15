@@ -17,6 +17,7 @@ const Button = ({
     "primary-shade": "bg-primary-shade text-white",
     success: "bg-success text-white",
     outline: "bg-white border-2 border-primary text-primary",
+    danger: "bg-danger text-white",
   };
 
   const BUTTON_SIZE = {
