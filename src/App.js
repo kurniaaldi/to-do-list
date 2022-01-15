@@ -1,6 +1,11 @@
 import { Button, Card, Dialog, LoadingOverlay } from "./component/atoms";
 import Layout from "./component/layouts";
-import { List, ModalDetail, ModalEdit } from "./component/molecules";
+import {
+  List,
+  ModalCreate,
+  ModalDetail,
+  ModalEdit,
+} from "./component/molecules";
 import { useSelector, useDispatch } from "react-redux";
 import {
   createData,
@@ -51,17 +56,18 @@ const dummy = [
 function App() {
   const [openDetail, setOpenDetail] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const [openCreate, setOpenCreate] = useState(false);
   const [comfirmDelete, setComfirmDelete] = useState({
     open: false,
     onOk: () => {},
     onCancel: () => {},
   });
   const [editValues, setEditValues] = useState({
-    createdAt: "2019-11-15 04:00",
-    description: "lorem ipsum",
-    id: 5,
-    status: 1,
-    title: "Make a phone call to mom",
+    createdAt: "",
+    description: "",
+    id: 0,
+    status: 0,
+    title: "",
   });
   const [isDone, setIsDone] = useState([]);
   const [isDo, setIsDo] = useState([]);
@@ -138,6 +144,9 @@ function App() {
     dispatch(updateData(filterData));
   };
 
+  const handleCreate = (values) => {
+    dispatch(createData(values));
+  };
   return (
     <Layout>
       <div className="w-full h-fit flex flex-col gap-4 items-center justify-center">
@@ -166,17 +175,16 @@ function App() {
           </div>
         </Card>
         <Button
-          onClick={() =>
-            dispatch(
-              createData({
-                id: 6,
-                title: "Make a phone call to mom1",
-                description: "lorem ipsum1",
-                status: 1,
-                createdAt: "2019-11-15 04:00",
-              })
-            )
-          }
+          onClick={() => {
+            setOpenCreate(true);
+            setEditValues({
+              createdAt: "",
+              description: "",
+              title: "",
+              id: data.length + 1,
+              status: 0,
+            });
+          }}
         >
           Create
         </Button>
@@ -200,6 +208,15 @@ function App() {
         </Card>
       </div>
       {isLoading && <LoadingOverlay />}
+
+      <ModalCreate
+        data={editValues}
+        title="Edit"
+        open={openCreate}
+        close={setOpenCreate}
+        onSave={handleCreate}
+      />
+
       <Dialog
         open={comfirmDelete.open}
         close={comfirmDelete.onCancel}
