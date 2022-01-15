@@ -9,6 +9,8 @@ const ListItem = (props) => {
     onClose = () => {},
     action = "",
     onEdit = () => {},
+    edit = false,
+    onClick = () => {},
   } = props;
   const [hover, setHover] = useState(false);
 
@@ -16,33 +18,35 @@ const ListItem = (props) => {
     <div
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className="border rounded-md p-2 flex items-center justify-start gap-2 relative"
+      onClick={onClick}
+      className="border rounded-md p-2 flex items-center justify-start gap-2 relative cursor-pointer hover:bg-primary/[0.5]"
     >
       <p className="text-lg truncate" title={text ? text : ""}>
         {text ? text : ""}
       </p>
       {action === "hover"
         ? hover && (
-            <div
-              onClick={onClose}
-              className="absolute rounded-md w-full h-full -m-2 flex items-center justify-center gap-4 bg-black/[0.5]"
-            >
-              <div
-                onClick={onEdit}
-                className="cursor-pointer rounded-md bg-white p-2"
-              >
-                {closeIcon ? closeIcon : <Edit width="20" height="20" />}
-              </div>
-              <div
-                onClick={close}
-                className="cursor-pointer rounded-md bg-white p-2"
-              >
-                {closeIcon ? (
-                  closeIcon
-                ) : (
-                  <Close color="#dd524c" width="20" height="20" />
-                )}
-              </div>
+            <div className="absolute rounded-md w-full h-full -m-2 flex items-center justify-center gap-4 ">
+              {edit && (
+                <div
+                  onClick={onEdit}
+                  className="cursor-pointer rounded-md bg-white p-2"
+                >
+                  {closeIcon ? closeIcon : <Edit width="20" height="20" />}
+                </div>
+              )}
+              {close && (
+                <div
+                  onClick={onClose}
+                  className="cursor-pointer rounded-md bg-white p-2"
+                >
+                  {closeIcon ? (
+                    closeIcon
+                  ) : (
+                    <Close color="#dd524c" width="20" height="20" />
+                  )}
+                </div>
+              )}
             </div>
           )
         : close && (

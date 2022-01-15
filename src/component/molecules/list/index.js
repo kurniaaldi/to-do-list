@@ -12,7 +12,8 @@ const List = (props) => {
             key={`list-index`}
             text={item.title}
             action={action ? "hover" : ""}
-            close={() => onRemove(item.id)}
+            onClose={() => onRemove(item.id)}
+            {...props}
           />
         );
       })}

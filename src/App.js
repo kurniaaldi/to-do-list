@@ -65,6 +65,8 @@ function App() {
                 data={data}
                 action="hover"
                 onRemove={(id) => dispatch(removeData(id))}
+                close
+                edit
               />
             )}
           </div>
@@ -89,7 +91,7 @@ function App() {
       <div className="w-full h-fit flex flex-col gap-4 items-center justify-center">
         <Card rounded shadow>
           <div className="h-96 w-80 p-2 overflow-auto">
-            {!isEmpty && <List data={data} action="" />}
+            {!isEmpty && <List data={data} action="" onClick />}
           </div>
         </Card>
       </div>
